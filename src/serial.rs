@@ -63,15 +63,19 @@ async fn usb_to_uart(_port: usize, mut usb_receiver: Receiver<'static, Driver<'s
     }
 }
 
-#[embassy_executor::task(pool_size = crate::board::NUM_PORTS)]
+#[embassy_executor::task(pool_size = board::NUM_PORTS)]
 async fn uart_control(_port: usize, usb_control: ControlChanged<'static>) {
    loop {
        usb_control.control_changed().await;
 
-       // TODO: we need to update the PIO settings
-       // The current release of embassy_usb doesn't expose line_settings here
-       // so we need a workaround or something.
-
-       // Or handle RTS/DTR, depending on what changed.
+       // TODO: Do something.
+       //
+       // We get a single change event so we know we need to update something,
+       // but don't know what.
+       //
+       // We need to handle RTS/DTR and line_settings changes.
+       //
+       // The current release of embassy_usb doesn't expose line_settings here but it does in main.
+       // That seems required to do implement this function usefully, so we'll want that.
    }
 }
