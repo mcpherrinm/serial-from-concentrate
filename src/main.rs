@@ -6,6 +6,7 @@
 mod board;
 mod serial;
 mod usb;
+mod console;
 
 use defmt_rtt as _;
 use embassy_executor::Spawner;
@@ -31,6 +32,7 @@ async fn main(spawner: Spawner) {
 
     let mut usb_builder = usb::init(p.USB);
 
+    console::init(spawner, &mut usb_builder);
     serial::init(spawner, &mut usb_builder);
 
     let mut led = Output::new(p.PIN_25, Level::Low);
