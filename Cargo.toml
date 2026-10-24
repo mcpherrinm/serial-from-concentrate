@@ -6,7 +6,9 @@ edition = "2024"
 [features]
 default = ["pi-pico"]
 rp2040 = ["embassy-rp/rp2040"]
+rp235xb = ["embassy-rp/rp235xb"]
 pi-pico = ["rp2040"]
+peripheral-board = ["rp235xb"]
 
 [dependencies]
 embassy-executor = { version = "0.10.0", features = ["defmt"] }
