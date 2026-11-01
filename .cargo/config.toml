@@ -2,8 +2,14 @@
 # runner = "probe-rs run --chip RP2040"
 runner = "picotool load --update --verify --execute -t elf"
 
-[build]
-target = "thumbv6m-none-eabi"  # Cortex-M0+
+# Use an alias to build the right architecture per board
+[alias]
+build-pico = "build --features pi-pico --target thumbv6m-none-eabi"
+run-pico = "run --features pi-pico --target thumbv6m-none-eabi"
+build-pico2 = "build --features pi-pico-2 --target thumbv8m.main-none-eabihf"
+run-pico2 = "run --features pi-pico-2 --target thumbv8m.main-none-eabihf"
+build-periph = "build --features peripheral-board --target thumbv8m.main-none-eabihf"
+run-periph = "run --features peripheral-board --target thumbv8m.main-none-eabihf"
 
 [env]
 DEFMT_LOG = "debug"
