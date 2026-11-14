@@ -1,0 +1,3 @@
+[workspace]
+members = ["controller", "shared/*"]
+resolver = "3"

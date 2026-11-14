@@ -27,9 +27,11 @@ async fn console(mut cdc: CdcAcmClass<'static, Driver<'static, USB>>) {
             // This is just a silly placeholder. We'll split the actual console logic out from the
             // USB handling, enabling it to be run off a UART or outside of hardware.
             if data.contains(&b'\n') || data.contains(&b'\r') {
-                match cdc.write_packet(b"\rran a command, asdf moo\r\n >").await {
-                    Ok(()) => (),
-                    Err(_) => break,
+                if cdc.write_packet(b"\r\n").await.is_err()
+                    || cdc.write_packet(cli::hello().as_bytes()).await.is_err()
+                    || cdc.write_packet(b"\r\n >").await.is_err()
+                {
+                    break;
                 }
             }
 
